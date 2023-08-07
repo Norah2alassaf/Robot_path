@@ -1,0 +1,248 @@
+<html>
+
+<head>
+<meta charset="utf-8"/>
+<meta name="desctription" content="Robot control panle"/>
+
+<title>ontrol panel</title>
+
+<style>
+body{
+background-color: #fafdff;
+opacity: 0.8;
+background: radial-gradient(circle, transparent 20%, #fafdff 20%, #fafdff 80%, transparent 80%, transparent), radial-gradient(circle, transparent 20%, #fafdff 20%, #fafdff 80%, transparent 80%, transparent) 25px 25px, linear-gradient(#e1f2fc 2px, transparent 2px) 0 -1px, linear-gradient(90deg, #e1f2fc 2px, #fafdff 2px) -1px 0;
+background-size: 50px 50px, 50px 50px, 25px 25px, 25px 25px;
+}
+
+.button1 {font-size:24px;
+background-color:  #e8f6ff;
+border-radius: 12px;
+position: relative;
+top:150px;
+left:360px;
+}
+
+.button1:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.button2{font-size:24px;
+border-radius: 12px;
+position: relative;
+top:150px;
+left:30;
+}
+
+.button2:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.button3 {font-size:24px;
+background-color:  #e8f6ff;
+border-radius: 12px;
+position: relative;
+top:150px;
+left:20px;
+}
+
+.button3:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.button4 {font-size:24px;
+background-color:  #e8f6ff;
+border-radius: 12px;
+position: relative;
+top:100;
+right:45;
+}
+
+.button4:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.button5 {font-size:24px;
+background-color:  #e8f6ff;
+border-radius: 12px;
+position: relative;
+top:200px;
+right:110px;
+}
+
+.button5:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+h1{
+position:relative;
+top:80px;
+Left:75px;
+}
+
+canvas{
+
+border: 3px solid black;
+background-color:#FAFAFA;
+position:relative;
+top:220px;
+Left:90px;
+
+}
+
+
+</style>
+
+</head>
+
+
+
+<body align="center">
+
+   
+   <h1>control panel</h1>
+   
+<div>
+<button type="submit"  name="dir" value="Forward" class="button1" onclick="forward();">Forward</button>
+<button type="submit"  name="dir" value="Backward"  class="button3" onclick="backward();">Backward</button>
+<button type="submit"  name="dir" value="Delete"  class="button2" onclick="Delete();">Delete</button>
+<button type="submit"  name="dir" value="Left" class="button4" onclick="left();">Left</button>
+<button type="submit"  name="dir" value="Right"  class="button5"onclick="right();" >Right</button>
+</div>
+
+<canvas id="myCanvas" width="500" height="400" >
+</canvas>
+
+
+<script>
+
+
+var can = document.getElementById("myCanvas");
+var line = can.getContext("2d");
+line.lineWidth="3";
+line.strokeStyle="blue";
+
+var x=250;
+var y=250;
+
+var f=0;
+var r=0;
+var l=0;
+var b=0;
+var rightward=0;
+var leftward=0;
+var rr=0;
+var rl=0;
+var left1=0;
+var left2=0;
+var startBackward =0;
+var startBackwardright =0;
+var startBackwardleft =0;
+
+	 
+	 
+function forward(){	
+   line.beginPath();
+   line.moveTo(x,y);
+   y=y-12;   
+   line.lineTo(x,y);
+   line.stroke();
+   
+   
+   
+   if(rightward==0&&leftward==0){
+   console.log("f")
+   } 
+   else if (rightward>=1){console.log("r") 
+   } else if (leftward>=1){console.log("l") }
+   
+   
+   
+   
+   
+   
+   
+rightward=0;
+leftward=0;
+rr=0;
+left1=0;
+startBackward=startBackward+1;
+   		
+}
+
+   
+
+function right(){
+  line.moveTo(x,y);			
+  x=x+12;
+  line.lineTo(x,y);
+  line.stroke();
+  ++rr;
+  if((rr==1&&rl==0)||(startBackward == 0 && startBackwardright == 0)){
+   console.log("r");
+  } else if(rr>=1&&rl==0){console.log("f")
+  }else if(rl==0){console.log("f")
+  }else if (rl>=1){console.log("l")}
+  
+rl=0;
+leftward=1+leftward;
+startBackward=startBackward+1;
+startBackwardright=1+startBackwardright;
+}
+
+
+
+
+function left(){
+  line.moveTo(x,y);			
+  x=x-12;
+  line.lineTo(x,y);
+  line.stroke();
+  ++left1;
+if ((left1==1&&left2==0)|| (startBackward == 0 && startBackwardleft == 0)){console.log("l")}  
+else if(left1>=1&&left2==0){console.log("f")}
+else if(left2==0){console.log("f")}
+else if(left2>=1){console.log("r")}
+
+rightward=rightward+1;
+left2=0;
+startBackward=startBackward+1;
+startBackwardleft=1+startBackwardleft;
+
+}
+
+
+
+function backward(){
+  line.moveTo(x,y);			
+  y=y+12;
+  line.lineTo(x,y);
+  line.stroke();
+  
+  if (startBackward == 0 ){
+	console.log("b")
+}else if (rightward == 0 && leftward == 0 ){
+		
+		console.log("f")
+}else if ( rightward >= 1 ){	
+		
+		console.log("l")		
+}else if ( leftward >= 1 ){	
+		
+		console.log("r")
+  		
+}
+}
+
+function Delete(){
+  line.clearRect(0, 0, can.width, can.height);
+  window.location.reload();
+}
+
+</script>
+
+</body>
+
+
+
+
+</html>
